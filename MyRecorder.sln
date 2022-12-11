@@ -1,25 +1,28 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 25.0.1704.1
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyRecorder", "MyRecorder.csproj", "{572208D1-83B9-44EA-92DA-99DA94C8DA16}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecorderApp", "RecorderApp\RecorderApp.csproj", "{7CC1676F-C34A-449F-81EE-E89101ECEC4F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecorderLib", "RecorderLib\RecorderLib.csproj", "{50564C3A-5562-49A8-9BC0-C22DFA19D2CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{572208D1-83B9-44EA-92DA-99DA94C8DA16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{572208D1-83B9-44EA-92DA-99DA94C8DA16}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{572208D1-83B9-44EA-92DA-99DA94C8DA16}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{572208D1-83B9-44EA-92DA-99DA94C8DA16}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {4727555A-1F03-4511-8555-30D6453348A2}
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7CC1676F-C34A-449F-81EE-E89101ECEC4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CC1676F-C34A-449F-81EE-E89101ECEC4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CC1676F-C34A-449F-81EE-E89101ECEC4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CC1676F-C34A-449F-81EE-E89101ECEC4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50564C3A-5562-49A8-9BC0-C22DFA19D2CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50564C3A-5562-49A8-9BC0-C22DFA19D2CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50564C3A-5562-49A8-9BC0-C22DFA19D2CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50564C3A-5562-49A8-9BC0-C22DFA19D2CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

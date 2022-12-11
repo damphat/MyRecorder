@@ -1,0 +1,26 @@
+﻿@page "/"
+@inject IJSRuntime jsRuntime
+
+<PageTitle>Index</PageTitle>
+
+<h1>Hello, world!</h1>
+
+<button @onclick="@Prompt">Click</button>
+
+
+@code {
+
+    private RecorderLib.VoiceRecorder? recorder;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        recorder = new RecorderLib.VoiceRecorder(jsRuntime);
+    }
+
+    async Task Prompt()
+    {
+        await recorder!.Prompt("Hello");
+    }
+
+}
