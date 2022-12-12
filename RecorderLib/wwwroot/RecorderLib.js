@@ -1,16 +1,37 @@
-﻿export function showPrompt(message) {
-  return prompt(message, 'Type anything here');
+﻿/** @type {VoiceRecorder} */
+var recorder;
+
+/**
+ * start the recorder and return a blobURL as a Promise<string>
+ */
+export async function startRecorder() {
+    if (recorder) throw Error("already started");
+    recorder = new VoiceRecorder();
+    try {
+        return await recorder.start();
+    } finally {
+        recorder = null;
+    }
 }
 
-class VoiceRecorder {
-    
-    #recoder;
+/**
+ * stop the current recorder
+ */
+export async function stopRecorder() {
+    if (recorder) {
+        recorder.stop();
+    }
+}
+
+export class VoiceRecorder {
+    /** @type {MediaRecorder} */
+    #recorder;
 
     /**
      * Ensure initialize
      * */
     async #init() {
-        if (this.#recoder) return;
+        if (this.#recorder) return;
         var constraint = { audio: true };
         var stream = await navigator.mediaDevices.getUserMedia(constraint);
         var rec = new MediaRecorder(stream);
@@ -20,38 +41,39 @@ class VoiceRecorder {
         rec.onresume = console.log;
         rec.onstart = console.log;
         rec.onstop = console.log;
-        this.#recoder = rec;
+        this.#recorder = rec;
     }
 
     /**
-     * starts this recorder then returns an audio blob
+     * starts this recorder then returns an audio blobURL asynchronously
      *
-     * @returns {Promise<Blob>}
+     * @returns {Promise<string>}
      */
     async start() {
-        // TODO start(constraint, limitInSeconds)
         await this.#init();
 
-        if (this.#recoder.state === 'recording') {
-            throw new Error('already started');
+        if (this.#recorder.state === "recording") {
+            throw new Error("already started");
         }
 
-        return new Promise(async function (resolve, reject) {
-            this.#recoder.ondataavailable = function (blob) {
-                resolve(blob);
-            }
-            this.#recoder.onerror = function (err) {
+        this.#recorder.start();
+
+        return new Promise(async (resolve, reject) => {
+            this.#recorder.ondataavailable = function (blob) {
+                resolve(URL.createObjectURL(blob.data));
+            };
+            this.#recorder.onerror = function (err) {
                 reject(err);
-            }
+            };
         });
     }
 
     /**
-     * stops this recorder 
+     * stops this recorder
      */
     stop() {
-        if (this.#recoder) {
-            this.#recoder.stop();
+        if (this.#recorder) {
+            this.#recorder.stop();
         }
     }
 }
