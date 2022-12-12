@@ -26,6 +26,5 @@
 - [x] try putting recoder-logic in C# (WASM)
 - [ ] try putting recoder-logic in javascript 
 
-<video controls>
-  <source src="demo.mov">
-</video>
+
+![](demo.gif)
