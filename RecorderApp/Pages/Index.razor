@@ -1,26 +1,51 @@
 ﻿@page "/"
 @inject IJSRuntime jsRuntime
 
-<PageTitle>Index</PageTitle>
+<div class="mt-5">
+    <div id="">
+        <button class="" disabled="@recording" @onclick=Record>Record</button>
+        <button class="" disabled="@(!recording)" @onclick=Stop>Stop</button>
+    </div>
 
-<h1>Hello, world!</h1>
+    @foreach (var blobURL in blobURLs)
+    {
+        <audio src="@blobURL" controls autoplay />
+    }
 
-<button @onclick="@Prompt">Click</button>
-
+</div>
 
 @code {
 
-    private RecorderLib.VoiceRecorder? recorder;
+    bool recording = false;
+    List<string> blobURLs = new List<string>();
+    RecorderLib.VoiceRecorder? recorder;
 
     protected override void OnInitialized()
     {
-        base.OnInitialized();
         recorder = new RecorderLib.VoiceRecorder(jsRuntime);
     }
 
-    async Task Prompt()
+    async void Record()
     {
-        await recorder!.Prompt("Hello");
+        try
+        {
+            recording = true;
+            var blobURL = await recorder?.Start()!;
+            blobURLs.Add(blobURL);
+        }
+        catch (Exception ex)
+        {
+            await jsRuntime.InvokeVoidAsync("alert", ex.Message);
+        }
+        finally
+        {
+            recording = false;
+            StateHasChanged();
+        }
     }
 
+    void Stop()
+    {
+        recorder?.Stop();
+    }
 }
