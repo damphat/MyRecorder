@@ -27,5 +27,5 @@
 - [ ] try putting recoder-logic in javascript 
 
 <video controls>
-  <source src="./demo.mov">
+  <source src="demo.mov">
 </video>
