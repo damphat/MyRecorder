@@ -1,33 +1,34 @@
 ﻿using Microsoft.JSInterop;
-
 namespace RecorderLib;
-
-
-public class VoiceRecorder : IAsyncDisposable
+public class VoiceRecorder
 {
-    private readonly Lazy<Task<IJSObjectReference>> moduleTask;
+    private IJSRuntime jsRuntime { get; set; }
+    private IJSObjectReference? module;
 
     public VoiceRecorder(IJSRuntime jsRuntime)
     {
-        moduleTask = new (() => jsRuntime.InvokeAsync<IJSObjectReference>(
-            "import", "./_content/RecorderLib/RecorderLib.js").AsTask());
+        this.jsRuntime = jsRuntime;
     }
-
-   
-
-    public async ValueTask<string> Prompt(string message)
+    public async Task<string> Start()
     {
-        var module = await moduleTask.Value;
-        return await module.InvokeAsync<string>("showPrompt", message);
-    }
-
-    public async ValueTask DisposeAsync()
-    {
-        if (moduleTask.IsValueCreated)
+        if (module == null)
         {
-            var module = await moduleTask.Value;
-            await module.DisposeAsync();
+            module = await jsRuntime.InvokeAsync<IJSObjectReference>(
+                "import",
+                "./_content/RecorderLib/RecorderLib.js"
+            );
+        }
+
+        return await module.InvokeAsync<string>("startRecorder");
+
+    }
+
+    public async void Stop()
+    {
+        if (module != null)
+        {
+            await module.InvokeVoidAsync("stopRecorder");
         }
     }
-}
 
+}
